@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.rafaeldeluca.Entidadesassociadas.dto.QuemicalElementDTO;
+import com.rafaeldeluca.Entidadesassociadas.entities.Group;
 import com.rafaeldeluca.Entidadesassociadas.entities.QuemicalElement;
 import com.rafaeldeluca.Entidadesassociadas.repositories.QuemicalElementRepository;
 
@@ -31,6 +32,23 @@ public class QuemicalElementService {
 		Optional<QuemicalElement> result = repository.findById(id);
 		QuemicalElement quemicalElement = result.get();
 		return new QuemicalElementDTO(quemicalElement);
+	}
+	
+	@Transactional(readOnly = false)
+	public QuemicalElementDTO insertElement (QuemicalElementDTO dto) {
+		
+		QuemicalElement entity = new QuemicalElement();
+		entity.setName(dto.getName());
+		entity.setAtomicNumber(dto.getAtomic_number());
+		
+		Group group = new Group();
+		group.setId(dto.getGroupId());
+		entity.setGroup(group);
+		
+		entity = repository.save(entity);
+		
+		return new QuemicalElementDTO(entity);
+		
 	}
 
 }
