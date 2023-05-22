@@ -1,8 +1,14 @@
 package com.rafaeldeluca.Entidadesassociadas.entities;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -11,13 +17,19 @@ public class Group implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)	
 	private Long id;
 	private String name;
+	
+	@OneToMany(mappedBy= "group")
+	private Set<QuemicalElement> elements = new HashSet<QuemicalElement>(); 
 	
 	public Group () {
 		
 	}
 
+	// não colocar coleções no construtor
 	public Group(Long id, String name) {		
 		this.id = id;
 		this.name = name;
@@ -38,6 +50,18 @@ public class Group implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	
+	
+	public Set<QuemicalElement> getElements() {
+		return elements;
+	}
+
+	/* não criar método set para coleções 
+	public void setElements(Set<QuemicalElement> elements) {
+		this.elements = elements;
+	}
+	*/
 
 	@Override
 	public int hashCode() {
@@ -62,6 +86,12 @@ public class Group implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}	
+	}
+
+	@Override
+	public String toString() {
+		return "Group [id=" + id + ", name=" + name + "]";
+	}		
+	
 
 }

@@ -6,6 +6,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -20,14 +22,19 @@ public class QuemicalElement implements Serializable {
 	private String name;
 	private Integer atomicNumber;
 	
+	@ManyToOne
+	@JoinColumn(name = "group_id")
+	private Group group;
+	
 	public QuemicalElement () {
 		
 	}
 
-	public QuemicalElement(Long id, String name, Integer atomicNumber) {		
+	public QuemicalElement(Long id, String name, Integer atomicNumber, Group group) {		
 		this.id = id;
 		this.name = name;
 		this.atomicNumber = atomicNumber;
+		this.group = group;
 	}
 
 	public Long getId() {
@@ -52,6 +59,15 @@ public class QuemicalElement implements Serializable {
 
 	public void setAtomicNumber(Integer atomicNumber) {
 		this.atomicNumber = atomicNumber;
+	}	
+	
+
+	public Group getGroup() {
+		return group;
+	}
+
+	public void setGroup(Group group) {
+		this.group = group;
 	}
 
 	@Override
