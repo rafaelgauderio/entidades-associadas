@@ -1,6 +1,7 @@
 package com.rafaeldeluca.Entidadesassociadas.services;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,13 @@ public class QuemicalElementService {
 		List<QuemicalElement> listElements = repository.findAll();
 		return listElements.stream().map(x -> new QuemicalElementDTO(x)).collect(Collectors.toList());	
 				
+	}
+	
+	@Transactional(readOnly = true) 
+	public QuemicalElementDTO findElementById (Long id) {
+		Optional<QuemicalElement> result = repository.findById(id);
+		QuemicalElement quemicalElement = result.get();
+		return new QuemicalElementDTO(quemicalElement);
 	}
 
 }
