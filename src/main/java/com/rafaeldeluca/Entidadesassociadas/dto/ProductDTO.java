@@ -15,20 +15,17 @@ public class ProductDTO implements Serializable {
 	
 	private Long id;
 	private String name;
-	private Double price;
-	
+	private Double price;	
 	private List<CategoryDTO> categories = new ArrayList<CategoryDTO>();
 	
 	public ProductDTO ()  {
 		
 	}
 
-	public ProductDTO(Long id, String name, Double price) {
-		
+	public ProductDTO(Long id, String name, Double price) {		
 		this.id = id;
 		this.name = name;
-		this.price = price;
-		
+		this.price = price;		
 	}
 	
 	public ProductDTO(Product entity) {
@@ -50,9 +47,10 @@ public class ProductDTO implements Serializable {
 		
 	}
 
-	private void addCategory (List<CategoryDTO> listCat) {
-		for(int i=0; listCat.size() >i; i++) {
-			listCat.add(listCat.get(i));
+	/* se fosse uma lista de categorias e não um set*/
+	private void addCategory (List<Category> listCat) {
+		for(int i=0; listCat.size() > i; i++) {
+			this.categories.add(new CategoryDTO(listCat.get(i)));
 		}
 	}
 
@@ -87,11 +85,5 @@ public class ProductDTO implements Serializable {
 	public void setCategories(List<CategoryDTO> categories) {
 		this.categories = categories;
 	}
-	
-	
-	
-	
-	
-	
 
 }
